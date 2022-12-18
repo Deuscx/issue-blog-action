@@ -1,18 +1,27 @@
 import path from 'path'
 import { Octokit } from '@octokit/rest'
 import * as dotenv from 'dotenv'
+import * as github from '@actions/github'
 import fs from 'fs-extra'
 import simpleGit from 'simple-git'
 import { debug } from '@actions/core'
-import { config } from './config'
 import { getInput } from './utils'
 
 dotenv.config()
 
 const {
   TOKEN: token,
-  OUTPUT: output = 'blog-output',
 } = process.env
+// get Input
+const output = getInput('output') || 'blog-output'
+const branch = getInput('branch') || 'gh-pages'
+
+const config = {
+  owner: github.context.repo.owner,
+  repo: github.context.repo.repo,
+}
+
+debug(`config:${JSON.stringify(config)}`)
 
 export async function generateIssues() {
   const octokit = new Octokit({
@@ -47,5 +56,5 @@ const baseDir = path.join(process.cwd(), getInput('cwd') || '')
 const git = simpleGit({ baseDir })
 
 export function commit() {
-  git.add('./*').commit('chore: update issue blog').push()
+  git.add('./*').commit('chore: update issue blog').push(undefined, branch)
 }
