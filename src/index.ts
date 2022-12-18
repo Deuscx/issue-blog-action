@@ -1,2 +1,2 @@
-import { getIssues } from './generate'
-getIssues()
+import { generateIssues } from './generate'
+generateIssues()

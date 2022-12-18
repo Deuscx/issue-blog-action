@@ -1,10 +1,10 @@
 name: generator
 
-on: [push]
+issues:
+  types: [opened, labeled]
 
 jobs:
   run-shell-command:
     runs-on: ubuntu-latest
     steps:
-      - name: test
-        run: echo "test"
+      - uses: actions/checkout@master
