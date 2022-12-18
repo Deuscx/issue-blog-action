@@ -1,0 +1,67 @@
+{
+  "name": "@deuscx/issue-blog-action",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@7.3.0",
+  "author": "Deuscx",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/deuscx",
+  "homepage": "https://github.com/deuscx/@deuscx/issue-blog-action#readme",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deuscx/@deuscx/issue-blog-action.git"
+  },
+  "bugs": "https://github.com/deuscx/@deuscx/issue-blog-action/issues",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "tsx ./src/index.ts",
+    "lint": "eslint .",
+    "lint:fix": "nr lint --fix",
+    "release": "bumpp && npm publish",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:update": "vitest -u"
+  },
+  "devDependencies": {
+    "@deuscx/eslint-config": "^0.0.8",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.11.17",
+    "bumpp": "^8.2.1",
+    "eslint": "^8.29.0",
+    "lint-staged": "^13.1.0",
+    "tsup": "^6.5.0",
+    "tsx": "^3.12.1",
+    "typescript": "^4.9.4",
+    "vite": "4.0.0",
+    "vite-plugin-inspect": "^0.7.10",
+    "vitest": "^0.25.7"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue,md}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.5",
+    "dotenv": "^16.0.3",
+    "fs-extra": "^11.1.0",
+    "simple-git": "^3.15.1"
+  }
+}
