@@ -22,15 +22,10 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var import_path = __toESM(require("path"));
 var import_rest = require("@octokit/rest");
 var dotenv = __toESM(require("dotenv"));
+var github = __toESM(require("@actions/github"));
 var import_fs_extra = __toESM(require("fs-extra"));
 var import_simple_git = __toESM(require("simple-git"));
 var import_core = require("@actions/core");
-
-// src/config.ts
-var config = {
-  owner: "Deuscx",
-  repo: "WB_SIGN_EXT"
-};
 
 // src/utils.ts
 var core = __toESM(require("@actions/core"));
@@ -41,15 +36,21 @@ function getInput2(name) {
 // src/generate.ts
 dotenv.config();
 var {
-  TOKEN: token,
-  OUTPUT: output = "blog-output"
+  GH_TOKEN: token
 } = process.env;
+var output = getInput2("output") || "blog-output";
+var branch = getInput2("branch") || "gh-pages";
+var config2 = {
+  owner: github.context.repo.owner,
+  repo: github.context.repo.repo
+};
+(0, import_core.debug)(`config:${JSON.stringify(config2)}`);
 async function generateIssues() {
   const octokit = new import_rest.Octokit({
     auth: token
   });
   const issues = await octokit.rest.issues.listForRepo({
-    ...config
+    ...config2
   });
   const { data } = issues;
   const dir = import_path.default.resolve(__dirname, `../${output}`);
@@ -71,7 +72,7 @@ async function generateIssues() {
 var baseDir = import_path.default.join(process.cwd(), getInput2("cwd") || "");
 var git = (0, import_simple_git.default)({ baseDir });
 function commit() {
-  git.add("./*").commit("chore: update issue blog").push();
+  git.add("./*").commit("chore: update issue blog").push(void 0, branch);
 }
 
 // src/index.ts
