@@ -10,7 +10,7 @@ import { getInput } from './utils'
 dotenv.config()
 
 const {
-  TOKEN: token,
+  GH_TOKEN: token,
 } = process.env
 // get Input
 const output = getInput('output') || 'blog-output'

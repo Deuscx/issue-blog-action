@@ -10,3 +10,5 @@ jobs:
       - uses: actions/checkout@master
       - name: generate blog post
         uses: deuscx/issue-blog-action
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
