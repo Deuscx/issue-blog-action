@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: generate blog post
-        uses: deuscx/issue-blog-action
+        uses: ./
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
