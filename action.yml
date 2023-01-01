@@ -1,0 +1,11 @@
+name: 'issue-blog-action'
+author: 'deuscx'
+description: 'generate issue blog'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
