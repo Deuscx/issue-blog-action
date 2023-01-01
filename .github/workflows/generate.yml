@@ -1,7 +1,23 @@
 name: generator
 
-issues:
-  types: [opened, labeled]
+on:
+  issue_comment:
+    types:
+      - created
+      - deleted
+      - edited
+  issues:
+    types:
+      - closed
+      - deleted
+      - edited
+      - labeled
+      - opened
+      - pinned
+      - reopened
+      - transferred
+      - unlabeled
+      - unpinned
 
 jobs:
   run-shell-command:
