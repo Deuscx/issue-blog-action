@@ -7,6 +7,7 @@ specifiers:
   '@octokit/rest': ^19.0.5
   '@types/fs-extra': ^9.0.13
   '@types/node': ^18.11.17
+  '@vercel/ncc': ^0.36.0
   bumpp: ^8.2.1
   dotenv: ^16.0.3
   eslint: ^8.29.0
@@ -32,6 +33,7 @@ devDependencies:
   '@deuscx/eslint-config': 0.0.8_ha6vam6werchizxrnqvarmz2zu
   '@types/fs-extra': 9.0.13
   '@types/node': 18.11.17
+  '@vercel/ncc': 0.36.0
   bumpp: 8.2.1
   eslint: 8.29.0
   lint-staged: 13.1.0
@@ -887,6 +889,11 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.46.0
       eslint-visitor-keys: 3.3.0
+    dev: true
+
+  /@vercel/ncc/0.36.0:
+    resolution: {integrity: sha512-/ZTUJ/ZkRt694k7KJNimgmHjtQcRuVwsST2Z6XfYveQIuBbHR+EqkTc1jfgPkQmMyk/vtpxo3nVxe8CNuau86A==}
+    hasBin: true
     dev: true
 
   /acorn-jsx/5.3.2_acorn@8.8.1:

@@ -25,8 +25,7 @@
   },
   "bugs": "https://github.com/deuscx/@deuscx/issue-blog-action/issues",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "ncc build src/index.ts  --license LICENSE",
     "start": "tsx ./src/index.ts",
     "lint": "eslint .",
     "lint:fix": "nr lint --fix",
@@ -39,6 +38,7 @@
     "@deuscx/eslint-config": "^0.0.8",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.11.17",
+    "@vercel/ncc": "^0.36.0",
     "bumpp": "^8.2.1",
     "eslint": "^8.29.0",
     "lint-staged": "^13.1.0",
