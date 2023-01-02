@@ -3,4 +3,4 @@ author: 'deuscx'
 description: 'generate issue blog'
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'dist/index.global.js'
