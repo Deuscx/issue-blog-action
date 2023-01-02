@@ -34,12 +34,13 @@ export async function generateIssues() {
 
   const { data } = issues
 
-  const dir = path.resolve(__dirname, `../${output}`)
+  const dir = `./${output}`
   fs.ensureDir(dir)
   for (const issue of data) {
     const { title, body } = issue
     if (!body) continue
-    fs.writeFileSync(path.resolve(`${dir}/${title}.md`), body)
+    debug(`creating issue post: ${title}`)
+    fs.writeFileSync(`${dir}/${title}.md`, body)
   }
 
   try {
