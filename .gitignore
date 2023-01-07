@@ -8,7 +8,6 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-blog-output
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -88,7 +87,6 @@ web_modules/
 # Next.js build output
 .next
 out
-issue-blog-action
 # Nuxt.js build / generate output
 .nuxt
 
