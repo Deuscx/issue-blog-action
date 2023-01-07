@@ -2,7 +2,7 @@ import { Octokit } from '@octokit/rest'
 import * as dotenv from 'dotenv'
 import * as github from '@actions/github'
 import fs from 'fs-extra'
-import exec from '@actions/exec'
+import * as exec from '@actions/exec'
 import { debug } from '@actions/core'
 import { getInput } from './utils'
 

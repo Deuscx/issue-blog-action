@@ -16259,7 +16259,6 @@ var lib = __nccwpck_require__(3848);
 var lib_default = /*#__PURE__*/__nccwpck_require__.n(lib);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@actions+exec@1.1.1/node_modules/@actions/exec/lib/exec.js
 var exec = __nccwpck_require__(7697);
-var exec_default = /*#__PURE__*/__nccwpck_require__.n(exec);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@actions+core@1.10.0/node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(8686);
 ;// CONCATENATED MODULE: ./src/utils.ts
@@ -16314,10 +16313,10 @@ async function generateIssues() {
 }
 async function commit() {
     (0,core.debug)(`commit ${output}`);
-    await exec_default().exec('git', ['config', '--global', 'user.name', 'issue-blog-bot']);
-    await exec_default().exec('git', ['add', output]);
-    await exec_default().exec('git', ['commit', '-m', 'chore: update issue blog']);
-    await exec_default().exec('git', ['push', 'origin', branch]);
+    await exec.exec('git', ['config', '--global', 'user.name', 'issue-blog-bot']);
+    await exec.exec('git', ['add', output]);
+    await exec.exec('git', ['commit', '-m', 'chore: update issue blog']);
+    await exec.exec('git', ['push', 'origin', branch]);
 }
 
 ;// CONCATENATED MODULE: ./src/index.ts
