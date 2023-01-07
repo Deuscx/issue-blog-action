@@ -20363,13 +20363,14 @@ async function generateIssues() {
         ...config,
     });
     const { data } = issues;
-    const dir = external_path_default().resolve(__dirname, `../${output}`);
+    const dir = `./${output}`;
     lib_default().ensureDir(dir);
     for (const issue of data) {
         const { title, body } = issue;
         if (!body)
             continue;
-        lib_default().writeFileSync(__nccwpck_require__.ab + "issue-blog-action/" + dir + '\\' + title + '.md', body);
+        (0,core.debug)(`creating issue post: ${title}`);
+        lib_default().writeFileSync(`${dir}/${title}.md`, body);
     }
     try {
         await commit();
