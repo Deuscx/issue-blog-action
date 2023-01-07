@@ -1,9 +1,8 @@
-import path from 'path'
 import { Octokit } from '@octokit/rest'
 import * as dotenv from 'dotenv'
 import * as github from '@actions/github'
 import fs from 'fs-extra'
-import simpleGit from 'simple-git'
+import exec from '@actions/exec'
 import { debug } from '@actions/core'
 import { getInput } from './utils'
 
@@ -53,9 +52,10 @@ export async function generateIssues() {
   }
 }
 
-const baseDir = path.join(process.cwd(), getInput('cwd') || '')
-const git = simpleGit({ baseDir })
-
-export function commit() {
-  git.add('./*').commit('chore: update issue blog').push(undefined, branch)
+export async function commit() {
+  debug(`commit ${output}`)
+  await exec.exec('git', ['config', '--global', 'user.name', 'issue-blog-bot'])
+  await exec.exec('git', ['add', output])
+  await exec.exec('git', ['commit', '-m', 'chore: update issue blog'])
+  await exec.exec('git', ['push', 'origin', branch])
 }
