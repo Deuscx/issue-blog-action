@@ -14597,7 +14597,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     await exec.exec("git", ["config", "--global", "user.name", "issue-blog-bot"]);
     await exec.exec("git", ["add", output]);
     await exec.exec("git", ["commit", "-m", "chore: update issue blog"]);
-    await exec.exec("git", ["push", "origin", branch]);
+    await exec.exec("git", ["push"]);
   }
 
   // src/index.ts

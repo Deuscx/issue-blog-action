@@ -57,5 +57,5 @@ export async function commit() {
   await exec.exec('git', ['config', '--global', 'user.name', 'issue-blog-bot'])
   await exec.exec('git', ['add', output])
   await exec.exec('git', ['commit', '-m', 'chore: update issue blog'])
-  await exec.exec('git', ['push', 'origin', branch])
+  await exec.exec('git', ['push'])
 }
