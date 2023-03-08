@@ -5,6 +5,7 @@ import * as github from "@actions/github";
 import fs from "fs-extra";
 import * as exec from "@actions/exec";
 import { debug } from "@actions/core";
+import matter from "gray-matter";
 
 // src/utils.ts
 import * as core from "@actions/core";
@@ -12,37 +13,50 @@ function getInput2(name) {
   return core.getInput(name);
 }
 
+// src/config.ts
+var config = {
+  owner: "Deuscx",
+  repo: "WB_SIGN_EXT"
+};
+
 // src/generate.ts
 dotenv.config();
+var isDev = process.env.NODE_ENV === "development";
 var {
   GH_TOKEN: token
 } = process.env;
 var output = getInput2("output") || "blog-output";
 var branch = getInput2("branch") || "gh-pages";
-var config2 = {
+var alias = getInput2("alias") || {};
+var enableTag = getInput2("enableTag") || "post";
+var config3 = !isDev ? {
   owner: github.context.repo.owner,
   repo: github.context.repo.repo
-};
-debug(`config:${JSON.stringify(config2)}`);
+} : config;
+debug(`config:${JSON.stringify(config3)}`);
 async function generateIssues() {
   const octokit = new Octokit({
     auth: token
   });
   const issues = await octokit.rest.issues.listForRepo({
-    ...config2
+    ...config3
   });
   const { data } = issues;
   const dir = `./${output}`;
   fs.ensureDir(dir);
+  fs.emptyDirSync(dir);
   for (const issue of data) {
     const { title, body } = issue;
-    if (!body)
+    const { created_at, updated_at, comments, comments_url, labels, milestone } = issue;
+    const frontMatter = { created_at, updated_at, comments, comments_url, labels };
+    if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
       continue;
     debug(`creating issue post: ${title}`);
-    fs.writeFileSync(`${dir}/${title}.md`, body);
+    const content = matter.stringify(body, frontMatter);
+    fs.writeFileSync(`${dir}/${title}.md`, content);
   }
   try {
-    await commit();
+    !isDev && await commit();
     debug("\u{1F680} Done!");
   } catch (error) {
     if (error instanceof Error)

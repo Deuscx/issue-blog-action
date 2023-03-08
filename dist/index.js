@@ -25,6 +25,7 @@ var github = __toESM(require("@actions/github"));
 var import_fs_extra = __toESM(require("fs-extra"));
 var exec = __toESM(require("@actions/exec"));
 var import_core = require("@actions/core");
+var import_gray_matter = __toESM(require("gray-matter"));
 
 // src/utils.ts
 var core = __toESM(require("@actions/core"));
@@ -32,37 +33,50 @@ function getInput2(name) {
   return core.getInput(name);
 }
 
+// src/config.ts
+var config = {
+  owner: "Deuscx",
+  repo: "WB_SIGN_EXT"
+};
+
 // src/generate.ts
 dotenv.config();
+var isDev = process.env.NODE_ENV === "development";
 var {
   GH_TOKEN: token
 } = process.env;
 var output = getInput2("output") || "blog-output";
 var branch = getInput2("branch") || "gh-pages";
-var config2 = {
+var alias = getInput2("alias") || {};
+var enableTag = getInput2("enableTag") || "post";
+var config3 = !isDev ? {
   owner: github.context.repo.owner,
   repo: github.context.repo.repo
-};
-(0, import_core.debug)(`config:${JSON.stringify(config2)}`);
+} : config;
+(0, import_core.debug)(`config:${JSON.stringify(config3)}`);
 async function generateIssues() {
   const octokit = new import_rest.Octokit({
     auth: token
   });
   const issues = await octokit.rest.issues.listForRepo({
-    ...config2
+    ...config3
   });
   const { data } = issues;
   const dir = `./${output}`;
   import_fs_extra.default.ensureDir(dir);
+  import_fs_extra.default.emptyDirSync(dir);
   for (const issue of data) {
     const { title, body } = issue;
-    if (!body)
+    const { created_at, updated_at, comments, comments_url, labels, milestone } = issue;
+    const frontMatter = { created_at, updated_at, comments, comments_url, labels };
+    if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
       continue;
     (0, import_core.debug)(`creating issue post: ${title}`);
-    import_fs_extra.default.writeFileSync(`${dir}/${title}.md`, body);
+    const content = import_gray_matter.default.stringify(body, frontMatter);
+    import_fs_extra.default.writeFileSync(`${dir}/${title}.md`, content);
   }
   try {
-    await commit();
+    !isDev && await commit();
     (0, import_core.debug)("\u{1F680} Done!");
   } catch (error) {
     if (error instanceof Error)
