@@ -16,7 +16,7 @@ const {
 // get Input
 const output = getInput('output') || 'blog-output'
 const branch = getInput('branch') || 'gh-pages'
-const alias = getInput('alias') || {}
+const alias = getInput('alias') || { } as Record<string, string>
 // 文章根据 label 或者 milestone 来判断是否生成
 const enableTag = getInput('enableTag') || 'post'
 
@@ -48,9 +48,16 @@ export async function generateIssues() {
     const { created_at, updated_at, comments, comments_url, labels, milestone } = issue
 
     const frontMatter = { created_at, updated_at, comments, comments_url, labels }
+    const aliasFrontMatter = Object.entries(frontMatter).reduce<Record<string, any>>((acc, cur) => {
+      const [key, value] = cur
+      const name = (alias as any)[key] || key
+      acc[name] = value
+      return acc
+    }, {})
+
     if (!body || ![milestone?.title, ...labels].includes(enableTag)) continue
     debug(`creating issue post: ${title}`)
-    const content = matter.stringify(body, frontMatter)
+    const content = matter.stringify(body, aliasFrontMatter)
     fs.writeFileSync(`${dir}/${title}.md`, content)
   }
 

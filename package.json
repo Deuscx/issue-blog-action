@@ -32,7 +32,8 @@
     "release": "bumpp && npm publish",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
-    "test:update": "vitest -u"
+    "test:update": "vitest -u",
+    "prepublishOnly": "nr build"
   },
   "devDependencies": {
     "@deuscx/eslint-config": "^0.0.8",
