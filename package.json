@@ -26,7 +26,7 @@
   "bugs": "https://github.com/deuscx/@deuscx/issue-blog-action/issues",
   "scripts": {
     "build": "tsup src/index.ts",
-    "start": "tsx ./src/index.ts",
+    "start": "cross-env NODE_ENV=development tsx ./src/index.ts",
     "lint": "eslint .",
     "lint:fix": "nr lint --fix",
     "release": "bumpp && npm publish",
@@ -40,6 +40,7 @@
     "@types/node": "^18.11.17",
     "@vercel/ncc": "^0.36.0",
     "bumpp": "^8.2.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8.29.0",
     "lint-staged": "^13.1.0",
     "tsup": "^6.5.0",
@@ -63,6 +64,7 @@
     "@actions/github": "^5.1.1",
     "@octokit/rest": "^19.0.5",
     "dotenv": "^16.0.3",
-    "fs-extra": "^11.1.0"
+    "fs-extra": "^11.1.0",
+    "gray-matter": "^4.0.3"
   }
 }

@@ -4,21 +4,28 @@ import * as github from '@actions/github'
 import fs from 'fs-extra'
 import * as exec from '@actions/exec'
 import { debug } from '@actions/core'
+import matter from 'gray-matter'
 import { getInput } from './utils'
-
+import { config as defaultConfig } from './config'
 dotenv.config()
 
+const isDev = process.env.NODE_ENV === 'development'
 const {
   GH_TOKEN: token,
 } = process.env
 // get Input
 const output = getInput('output') || 'blog-output'
 const branch = getInput('branch') || 'gh-pages'
+const alias = getInput('alias') || {}
+// 文章根据 label 或者 milestone 来判断是否生成
+const enableTag = getInput('enableTag') || 'post'
 
-const config = {
-  owner: github.context.repo.owner,
-  repo: github.context.repo.repo,
-}
+const config = !isDev
+  ? {
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+    }
+  : defaultConfig
 
 debug(`config:${JSON.stringify(config)}`)
 
@@ -35,15 +42,20 @@ export async function generateIssues() {
 
   const dir = `./${output}`
   fs.ensureDir(dir)
+  fs.emptyDirSync(dir)
   for (const issue of data) {
     const { title, body } = issue
-    if (!body) continue
+    const { created_at, updated_at, comments, comments_url, labels, milestone } = issue
+
+    const frontMatter = { created_at, updated_at, comments, comments_url, labels }
+    if (!body || ![milestone?.title, ...labels].includes(enableTag)) continue
     debug(`creating issue post: ${title}`)
-    fs.writeFileSync(`${dir}/${title}.md`, body)
+    const content = matter.stringify(body, frontMatter)
+    fs.writeFileSync(`${dir}/${title}.md`, content)
   }
 
   try {
-    await commit()
+    !isDev && await commit()
     debug('🚀 Done!')
   }
   catch (error) {
