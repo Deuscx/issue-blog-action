@@ -36,7 +36,7 @@ function getInput2(name) {
 // src/config.ts
 var config = {
   owner: "Deuscx",
-  repo: "WB_SIGN_EXT"
+  repo: "issue-blog-action"
 };
 
 // src/generate.ts
@@ -69,10 +69,16 @@ async function generateIssues() {
     const { title, body } = issue;
     const { created_at, updated_at, comments, comments_url, labels, milestone } = issue;
     const frontMatter = { created_at, updated_at, comments, comments_url, labels };
+    const aliasFrontMatter = Object.entries(frontMatter).reduce((acc, cur) => {
+      const [key, value] = cur;
+      const name = alias[key] || key;
+      acc[name] = value;
+      return acc;
+    }, {});
     if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
       continue;
     (0, import_core.debug)(`creating issue post: ${title}`);
-    const content = import_gray_matter.default.stringify(body, frontMatter);
+    const content = import_gray_matter.default.stringify(body, aliasFrontMatter);
     import_fs_extra.default.writeFileSync(`${dir}/${title}.md`, content);
   }
   try {
