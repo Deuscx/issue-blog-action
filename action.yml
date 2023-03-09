@@ -1,4 +1,4 @@
-name: 'issue-blog-action'
+name: 'issue-post-action'
 author: 'deuscx'
 description: 'generate issue blog'
 inputs:
