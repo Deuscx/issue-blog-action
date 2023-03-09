@@ -1,6 +1,16 @@
 name: 'issue-blog-action'
 author: 'deuscx'
 description: 'generate issue blog'
+inputs:
+  output:
+    description: 'output blog dir'
+    required: false
+  alias:
+    description: 'alias of yaml front-matter'
+    required: false
+  enableTag:
+    description: 'generate blog by tag or milestone'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.global.js'
