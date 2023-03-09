@@ -46,8 +46,12 @@ async function generateIssues() {
   fs.ensureDir(dir);
   fs.emptyDirSync(dir);
   for (const issue of data) {
-    const { title, body } = issue;
+    const { title, body, user } = issue;
     const { created_at, updated_at, comments, comments_url, labels, milestone } = issue;
+    if (user && user.login !== config3.owner)
+      continue;
+    if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
+      continue;
     const frontMatter = { created_at, updated_at, comments, comments_url, labels };
     const aliasFrontMatter = Object.entries(frontMatter).reduce((acc, cur) => {
       const [key, value] = cur;
@@ -55,8 +59,6 @@ async function generateIssues() {
       acc[name] = value;
       return acc;
     }, {});
-    if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
-      continue;
     debug(`creating issue post: ${title}`);
     const content = matter.stringify(body, aliasFrontMatter);
     fs.writeFileSync(`${dir}/${title}.md`, content);
