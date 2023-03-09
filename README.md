@@ -17,6 +17,11 @@ jobs:
 ```
 
 ## Inputs
-
+env:
 - GH_TOKEN: authorization for commit file and get issues
+
+input:
+- output: the post output directory
+- alias: alias of yaml front-matter
+- enableTag: generate blog by tag or milestone, default 'post'
   
