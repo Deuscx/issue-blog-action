@@ -16,7 +16,7 @@ const {
 // get Input
 const output = getInput('output') || 'blog-output'
 const branch = getInput('branch') || 'gh-pages'
-const alias = getInput('alias') || {} as Record<string, string>
+const alias = JSON.parse(getInput('alias') || '{}') as Record<string, string>
 // 文章根据 label 或者 milestone 来判断是否生成
 const enableTag = getInput('enableTag') || 'post'
 

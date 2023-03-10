@@ -35,6 +35,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          output: 'src/content/blog'
-          alias:
-            created_at: 'pubDate'
+          output: "src/content/blog"
+          alias: '{"created_at":"pubDate"}'

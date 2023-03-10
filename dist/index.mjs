@@ -27,7 +27,7 @@ var {
 } = process.env;
 var output = getInput2("output") || "blog-output";
 var branch = getInput2("branch") || "gh-pages";
-var alias = getInput2("alias") || {};
+var alias = JSON.parse(getInput2("alias") || "{}");
 var enableTag = getInput2("enableTag") || "post";
 var config3 = !isDev ? {
   owner: github.context.repo.owner,
