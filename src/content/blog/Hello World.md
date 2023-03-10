@@ -1,6 +1,6 @@
 ---
-created_at: '2023-01-01T08:40:20Z'
-updated_at: '2023-03-09T14:02:35Z'
+pubDate: '2023-01-01T08:40:20Z'
+updated_at: '2023-03-10T00:04:36Z'
 comments: 1
 comments_url: 'https://api.github.com/repos/Deuscx/issue-blog-action/issues/1/comments'
 labels:
