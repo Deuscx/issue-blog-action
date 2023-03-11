@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: generate blog post
-        uses: deuscx/issue-blog-action
+        uses: Deuscx/issue-blog-action
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 ```
