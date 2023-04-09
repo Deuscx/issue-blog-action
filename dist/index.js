@@ -67,12 +67,12 @@ async function generateIssues() {
   import_fs_extra.default.emptyDirSync(dir);
   for (const issue of data) {
     const { title, body, user } = issue;
-    const { created_at, updated_at, comments, comments_url, labels, milestone } = issue;
+    const { created_at, updated_at, comments, comments_url, labels, milestone, id } = issue;
     if (user && user.login !== config3.owner)
       continue;
     if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
       continue;
-    const frontMatter = { created_at, updated_at, comments, comments_url, labels };
+    const frontMatter = { created_at, updated_at, comments, comments_url, labels, id };
     const aliasFrontMatter = Object.entries(frontMatter).reduce((acc, cur) => {
       const [key, value] = cur;
       const name = alias[key] || key;
