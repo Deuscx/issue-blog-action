@@ -45,12 +45,12 @@ export async function generateIssues() {
   fs.emptyDirSync(dir)
   for (const issue of data) {
     const { title, body, user } = issue
-    const { created_at, updated_at, comments, comments_url, labels, milestone, id } = issue
+    const { created_at, updated_at, comments, comments_url, labels, milestone, number } = issue
 
     if (user && user.login !== config.owner) continue
     if (!body || ![milestone?.title, ...labels].includes(enableTag)) continue
 
-    const frontMatter = { created_at, updated_at, comments, comments_url, labels, id, title }
+    const frontMatter = { created_at, updated_at, comments, comments_url, labels, number, title }
     const aliasFrontMatter = Object.entries(frontMatter).reduce<Record<string, any>>((acc, cur) => {
       const [key, value] = cur
       const name = (alias as any)[key] || key
