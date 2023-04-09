@@ -18143,12 +18143,12 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     import_fs_extra.default.emptyDirSync(dir);
     for (const issue of data) {
       const { title, body, user } = issue;
-      const { created_at, updated_at, comments, comments_url, labels, milestone, id } = issue;
+      const { created_at, updated_at, comments, comments_url, labels, milestone, number } = issue;
       if (user && user.login !== config3.owner)
         continue;
       if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
         continue;
-      const frontMatter = { created_at, updated_at, comments, comments_url, labels, id, title };
+      const frontMatter = { created_at, updated_at, comments, comments_url, labels, number, title };
       const aliasFrontMatter = Object.entries(frontMatter).reduce((acc, cur) => {
         const [key, value] = cur;
         const name = alias[key] || key;
