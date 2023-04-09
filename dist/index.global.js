@@ -18148,7 +18148,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
         continue;
       if (!body || ![milestone == null ? void 0 : milestone.title, ...labels].includes(enableTag))
         continue;
-      const frontMatter = { created_at, updated_at, comments, comments_url, labels, id };
+      const frontMatter = { created_at, updated_at, comments, comments_url, labels, id, title };
       const aliasFrontMatter = Object.entries(frontMatter).reduce((acc, cur) => {
         const [key, value] = cur;
         const name = alias[key] || key;
