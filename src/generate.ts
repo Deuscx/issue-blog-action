@@ -50,7 +50,7 @@ export async function generateIssues() {
     if (user && user.login !== config.owner) continue
     if (!body || ![milestone?.title, ...labels].includes(enableTag)) continue
 
-    const frontMatter = { created_at, updated_at, comments, comments_url, labels, id }
+    const frontMatter = { created_at, updated_at, comments, comments_url, labels, id, title }
     const aliasFrontMatter = Object.entries(frontMatter).reduce<Record<string, any>>((acc, cur) => {
       const [key, value] = cur
       const name = (alias as any)[key] || key
