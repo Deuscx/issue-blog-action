@@ -13,13 +13,10 @@ jobs:
       - name: generate blog post
         uses: Deuscx/issue-blog-action
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Inputs
-env:
-- GH_TOKEN: authorization for commit file and get issues
-
 input:
 - output: the post output directory
 - alias: alias of yaml front-matter
