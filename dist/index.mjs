@@ -1,3 +1,6 @@
+// src/index.ts
+import { setFailed } from "@actions/core";
+
 // src/generate.ts
 import { Octokit } from "@octokit/rest";
 import * as dotenv from "dotenv";
@@ -73,6 +76,7 @@ async function generateIssues() {
 }
 async function commit() {
   debug(`commit ${output}`);
+  await exec.exec("git", ["config", "--global", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"]);
   await exec.exec("git", ["config", "--global", "user.name", "issue-blog-bot"]);
   await exec.exec("git", ["add", output]);
   await exec.exec("git", ["commit", "-m", "chore: update issue blog"]);
@@ -80,4 +84,11 @@ async function commit() {
 }
 
 // src/index.ts
-generateIssues();
+async function main() {
+  try {
+    await generateIssues();
+  } catch (error) {
+    setFailed(error.message);
+  }
+}
+main();

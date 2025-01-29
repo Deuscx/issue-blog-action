@@ -6,11 +6,16 @@
   "license": "MIT",
   "funding": "https://github.com/sponsors/deuscx",
   "homepage": "https://github.com/deuscx/@deuscx/issue-blog-action#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deuscx/@deuscx/issue-blog-action.git"
+  },
+  "bugs": "https://github.com/deuscx/@deuscx/issue-blog-action/issues",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     }
   },
   "main": "dist/index.js",
@@ -19,11 +24,6 @@
   "files": [
     "dist"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/deuscx/@deuscx/issue-blog-action.git"
-  },
-  "bugs": "https://github.com/deuscx/@deuscx/issue-blog-action/issues",
   "scripts": {
     "build": "tsup src/index.ts",
     "start": "cross-env NODE_ENV=development tsx ./src/index.ts",
@@ -35,8 +35,17 @@
     "test:update": "vitest -u",
     "prepublishOnly": "nr build"
   },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1",
+    "@octokit/rest": "^19.0.5",
+    "dotenv": "^16.0.3",
+    "fs-extra": "^11.1.0",
+    "gray-matter": "^4.0.3"
+  },
   "devDependencies": {
-    "@deuscx/eslint-config": "^0.0.8",
+    "@antfu/eslint-config": "^4.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.11.17",
     "@vercel/ncc": "^0.36.0",
@@ -58,14 +67,5 @@
     "*.{js,ts,tsx,vue,md}": [
       "eslint --fix"
     ]
-  },
-  "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@actions/exec": "^1.1.1",
-    "@actions/github": "^5.1.1",
-    "@octokit/rest": "^19.0.5",
-    "dotenv": "^16.0.3",
-    "fs-extra": "^11.1.0",
-    "gray-matter": "^4.0.3"
   }
 }

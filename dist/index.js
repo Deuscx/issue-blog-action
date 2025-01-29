@@ -14,9 +14,16 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
+
+// src/index.ts
+var import_core2 = require("@actions/core");
 
 // src/generate.ts
 var import_rest = require("@octokit/rest");
@@ -93,6 +100,7 @@ async function generateIssues() {
 }
 async function commit() {
   (0, import_core.debug)(`commit ${output}`);
+  await exec.exec("git", ["config", "--global", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"]);
   await exec.exec("git", ["config", "--global", "user.name", "issue-blog-bot"]);
   await exec.exec("git", ["add", output]);
   await exec.exec("git", ["commit", "-m", "chore: update issue blog"]);
@@ -100,4 +108,11 @@ async function commit() {
 }
 
 // src/index.ts
-generateIssues();
+async function main() {
+  try {
+    await generateIssues();
+  } catch (error) {
+    (0, import_core2.setFailed)(error.message);
+  }
+}
+main();
