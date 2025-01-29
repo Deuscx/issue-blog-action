@@ -1,11 +1,6 @@
 name: generator
 
 on:
-  issue_comment:
-    types:
-      - created
-      - deleted
-      - edited
   issues:
     types:
       - closed

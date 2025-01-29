@@ -75,6 +75,7 @@ export async function generateIssues() {
 
 export async function commit() {
   debug(`commit ${output}`)
+  await exec.exec('git', ['config', '--global', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'])
   await exec.exec('git', ['config', '--global', 'user.name', 'issue-blog-bot'])
   await exec.exec('git', ['add', output])
   await exec.exec('git', ['commit', '-m', 'chore: update issue blog'])
